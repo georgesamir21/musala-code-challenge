@@ -23,8 +23,15 @@ module.exports = () => {
         message: (data) => `${data.value} is invalid IPV4 address!'`
       }
     },
-    devices: [{ type: Schema.Types.ObjectId, ref: 'Device' }]
+    devices: {
+      type: [{ type: Schema.Types.ObjectId, ref: 'Device' }],
+      validate: [maxDevicesLimit, '{PATH} exceeds the limit of 10 devices!']
+    }
   });
+
+  const maxDevicesLimit = (devices) => {
+    devices.length <= 10;
+  };
 
   const Gateway = model('Gateway', gatewaySchema);
   return Gateway;

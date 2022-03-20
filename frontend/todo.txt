@@ -1,0 +1,18 @@
+TODO: 
+The service must also offer an operation for 
+# displaying information about all stored gateways (and their devices) **
+# operation for displaying details for a single gateway. **
+# Finally, it must be possible to add and remove a device from a gateway. **
+
+
+
+Each gateway has:
+    • a unique serial number (string), 
+    • human-readable name (string),
+    • IPv4 address (to be validated),
+    • multiple associated peripheral devices. 
+Each peripheral device has:
+    • a UID (number),
+    • vendor (string),
+    • date created,
+    • status - online/offline.

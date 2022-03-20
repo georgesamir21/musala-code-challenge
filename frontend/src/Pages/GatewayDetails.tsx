@@ -83,7 +83,7 @@ export const GatewayDetails = () => {
 
   if (!gateway) return <Title level={3}>Loading...</Title>;
   return (
-    <div className="gateway-details">
+    <>
       <Title level={2} className="title">
         {gateway.name}
       </Title>
@@ -128,6 +128,6 @@ export const GatewayDetails = () => {
           </Col>
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
