@@ -79,6 +79,7 @@ export const GatewayDetails = () => {
         <Col span={24}>
           {gateway.devices.length ? (
             <Table
+              rowKey="_id"
               dataSource={gateway.devices}
               columns={devicesColumns}
             ></Table>

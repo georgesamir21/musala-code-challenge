@@ -46,7 +46,7 @@ export const Gateways = () => {
         <Title level={3}>Gateways</Title>
       </Col>
       <Col span={24}>
-        <Table columns={columns} dataSource={gateways}></Table>
+        <Table rowKey="_id" columns={columns} dataSource={gateways}></Table>
       </Col>
     </Row>
   );
