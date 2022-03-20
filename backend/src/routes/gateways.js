@@ -4,7 +4,9 @@ const {
   getGatewayById,
   updateGateway,
   deleteGatewayById,
-  addGateway
+  addGateway,
+  deleteDeviceById,
+  addDevice
 } = require('../controllers/gateways');
 
 module.exports = () => {
@@ -13,6 +15,9 @@ module.exports = () => {
   router.get('/:id', getGatewayById);
   router.put('/:id', updateGateway);
   router.delete('/:id', deleteGatewayById);
+  router.delete('/:id/device/:deviceId', deleteDeviceById);
+  router.post('/:id/device', addDevice);
   router.post('/', addGateway);
+
   return router;
 };

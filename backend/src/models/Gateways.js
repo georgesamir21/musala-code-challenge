@@ -1,5 +1,36 @@
 const { Schema, model } = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+// const { deviceSchema } = require('./Devices');
+const maxDevicesLimit = (devices) => {
+  return devices.length <= 10;
+};
+
+const deviceSchema = new Schema(
+  {
+    uid: {
+      type: Number,
+      required: true,
+      // unique: true,
+      default: Date.now
+    },
+    vendor: {
+      type: String,
+      required: true
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: ['online', 'offline']
+    }
+  },
+  {
+    timestamps: {
+      createdAt: 'created_at'
+      // updatedAt: 'updated_at'
+    }
+  }
+);
+
 module.exports = () => {
   const gatewaySchema = new Schema({
     name: {
@@ -24,14 +55,10 @@ module.exports = () => {
       }
     },
     devices: {
-      type: [{ type: Schema.Types.ObjectId, ref: 'Device' }],
+      type: [deviceSchema],
       validate: [maxDevicesLimit, '{PATH} exceeds the limit of 10 devices!']
     }
   });
-
-  const maxDevicesLimit = (devices) => {
-    devices.length <= 10;
-  };
 
   const Gateway = model('Gateway', gatewaySchema);
   return Gateway;

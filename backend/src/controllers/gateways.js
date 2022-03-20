@@ -67,3 +67,29 @@ exports.addGateway = async (req, res) => {
     return res.status(400).json({ error: error });
   }
 };
+
+exports.deleteDeviceById = async (req, res) => {
+  try {
+    const { id, deviceId } = req.params;
+    const gateway = await GatewaysModel.findById(id);
+    await gateway.devices.id(deviceId).remove();
+    await gateway.save();
+    return res.status(204).json({});
+  } catch (error) {
+    return res.status(400).json({ error: error });
+  }
+};
+
+exports.addDevice = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { vendor, status } = req.body;
+    const gateway = await GatewaysModel.findById(id);
+    await gateway.devices.push({ vendor, status });
+    // await gateway.devices.create({ vendor, status });
+    const updatedGateway = await gateway.save();
+    return res.status(201).json({ data: updatedGateway });
+  } catch (error) {
+    return res.status(400).json({ error: error });
+  }
+};
