@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "antd";
-// import "./App.css";
+import "./App.scss";
 import { Header } from "./components/Header";
 import { AddGateway } from "./Pages/AddGateway";
 import { GatewayDetails } from "./Pages/GatewayDetails";
@@ -10,10 +10,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {/* <Layout.Header> */}
-          <Header />
-        {/* </Layout.Header> */}
-        <Layout.Content>
+        <Header />
+        <Layout.Content className="my-content">
           <Routes>
             <Route path="/" element={<Gateways />} />
             <Route path="/add-gateway" element={<AddGateway />} />

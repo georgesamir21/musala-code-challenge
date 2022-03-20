@@ -1,8 +1,10 @@
+import { Typography } from "antd";
 import { useState } from "react";
 import { GatewayForm } from "../components/GatewayForm";
 import { PeripheralDeviceForm } from "../components/PeripheralDeviceFrom";
 import { IGateway } from "../types/Gateway";
 import { IPeripheralDevice } from "../types/PeripheralDevice";
+const { Title } = Typography;
 
 export const AddGateway = () => {
   const [peripheralDevices, setPeripheralDevices] = useState<
@@ -14,12 +16,12 @@ export const AddGateway = () => {
   };
 
   const handleGatewaySubmit = (gateway: IGateway) => {
-    console.log(gateway)
+    console.log(gateway);
   };
 
   return (
     <div className="add-gateway-form">
-      <h3>Add Gateway form!</h3>
+      <Title level={3}>Add Gateway form!</Title>
       <GatewayForm
         onSubmit={(gateway) => handleGatewaySubmit(gateway)}
       ></GatewayForm>
