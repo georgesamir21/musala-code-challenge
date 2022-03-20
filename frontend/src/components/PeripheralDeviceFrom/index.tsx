@@ -7,12 +7,7 @@ type Props = {
 
 export const PeripheralDeviceForm = ({ onSubmit }: Props) => {
   const onFinish = (values: any) => {
-    // console.log("Success:", values);
     onSubmit(values);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    // console.log("Failed:", errorInfo);
   };
 
   return (
@@ -22,7 +17,6 @@ export const PeripheralDeviceForm = ({ onSubmit }: Props) => {
       wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
@@ -37,7 +31,6 @@ export const PeripheralDeviceForm = ({ onSubmit }: Props) => {
         label="Status"
         rules={[{ required: true, message: "Status is required!" }]}
       >
-        {/* TODO: get value */}
         <Select value={"offline"}>
           <Select.Option value="online">Online</Select.Option>
           <Select.Option value="offline">Offline</Select.Option>

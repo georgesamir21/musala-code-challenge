@@ -7,12 +7,7 @@ type Props = {
 
 export const GatewayForm = ({ onSubmit }: Props) => {
   const onFinish = (values: any) => {
-    // console.log("Success:", values);
     onSubmit(values);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    // console.log("Failed:", errorInfo);
   };
 
   return (
@@ -22,7 +17,6 @@ export const GatewayForm = ({ onSubmit }: Props) => {
       wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item

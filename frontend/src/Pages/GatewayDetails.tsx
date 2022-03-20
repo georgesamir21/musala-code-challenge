@@ -1,18 +1,23 @@
 import { Tag, Table, Typography, Row, Col, Divider } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { DeleteFilled } from "@ant-design/icons";
-import { useEffect, useState } from "react";
-import { IGateway } from "../types/Gateway";
 import { IPeripheralDevice } from "../types/PeripheralDevice";
 import { PeripheralDeviceForm } from "../components/PeripheralDeviceFrom";
+import { useGetGatewayById } from "../api/hooks/useGetGatewayById";
+import { useParams } from "react-router-dom";
+import { useCreateDevice } from "../api/hooks/useCreateDevice";
+import { useDeleteDevice } from "../api/hooks/useDeleteDevice";
 
 const { Title, Text } = Typography;
 
 export const GatewayDetails = () => {
-  const [gateway, setGateway] = useState<IGateway | null>(null);
-
-  const handleDeviceDelete = (id: string | number) => {
-    console.log("delete", id);
+  const { id } = useParams();
+  const { data: gateway, get } = useGetGatewayById(id!);
+  const createDevice = useCreateDevice();
+  const deleteDevice = useDeleteDevice();
+  const handleDeviceDelete = async (deviceId: string) => {
+    await deleteDevice(id!, deviceId);
+    get();
   };
 
   const devicesColumns: ColumnsType<IPeripheralDevice> = [
@@ -40,45 +45,9 @@ export const GatewayDetails = () => {
     },
   ];
 
-  useEffect(() => {
-    // TODO: make API call to get the gateway
-    setGateway({
-      name: "test",
-      _id: "5000",
-      ip_address: "162.92.108.2",
-      serial_number: "20336-555-555",
-      devices: [
-        {
-          vendor: "IBM",
-          _id: "500",
-          status: "online",
-          uid: 600000,
-        },
-        {
-          vendor: "MICROSOFT",
-          _id: "500",
-          status: "offline",
-          uid: 600000,
-        },
-        {
-          vendor: "IBM",
-          _id: "500",
-          status: "offline",
-          uid: 600000,
-        },
-        {
-          vendor: "CISCO",
-          _id: "500",
-          status: "online",
-          uid: 600000,
-        },
-      ],
-    });
-  }, []);
-
-  const handleDeviceAdded = (device: IPeripheralDevice) => {
-    // TODO: make api call to add device
-    console.log({ device });
+  const handleDeviceAdded = async (device: IPeripheralDevice) => {
+    await createDevice(id!, device);
+    get();
   };
 
   if (!gateway) return <Title level={3}>Loading...</Title>;
@@ -105,29 +74,32 @@ export const GatewayDetails = () => {
       <Divider />
       <Row className="devices">
         <Col span={24}>
-          {/* <CloudServerOutlined size={20} /> */}
           <Title level={3}>Devices:</Title>
         </Col>
         <Col span={24}>
-          {gateway.devices.length && (
+          {gateway.devices.length ? (
             <Table
               dataSource={gateway.devices}
               columns={devicesColumns}
             ></Table>
+          ) : (
+            <Text strong>No devices yet, add one.</Text>
           )}
         </Col>
       </Row>
       <Divider />
-      <Row>
-        <Col span={24}>
-          <Title level={3}>Add Device</Title>
+      {gateway.devices.length < 10 && (
+        <Row>
           <Col span={24}>
-            <PeripheralDeviceForm
-              onSubmit={(device) => handleDeviceAdded(device)}
-            />
+            <Title level={3}>Add Device</Title>
+            <Col span={24}>
+              <PeripheralDeviceForm
+                onSubmit={(device) => handleDeviceAdded(device)}
+              />
+            </Col>
           </Col>
-        </Col>
-      </Row>
+        </Row>
+      )}
     </>
   );
 };
