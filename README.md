@@ -13,4 +13,35 @@ A simple RESTful API and React app for Gateway mangement system
   - [Typescript](https://www.typescriptlang.org/) - Strongly typed programming language that builds on JavaScript
 
 ### Run the project
-`docker-compose up`
+Run in terminal `docker-compose up` this will run the database, API server on port 8000 & Front End on port 3000
+
+**NOTE** need to populate the database with some data
+- extract `./musala-gateway-mgmt-sys.zip` into `./dump`
+- Run
+```bash
+docker cp ./dump <container_name>:/dump
+
+docker exec -i <container_name> /usr/bin/mongorestore --username <username> --password <password> --authenticationDatabase admin --db <database_name> /dump/<database_name>
+```
+
+
+Open your browser on `http://localhost:3000`
+
+### Available routes
+#### FrontEnd
+baseURL = `http://localhost:3000`
+- Home - `baseURL/`
+    - Display list / table of all the gateways available in the db
+- Gateway Details - `baseURL/gateways/:id`
+    - Display all the gateway details with its associated devices, you can add or delete a device from this page
+- Add Gateway - `baseURL/add-gateway`
+    - Displays a form where a new gateway can be added
+
+#### API
+baseURL = `http://localhost:8000`
+ - GET `baseURL/gateways` retrive a list of all the stored gateways
+ - POST `baseURL/gateways` adds a new gateway to the system
+ - PUT `baseURL/gateways/:id` updates an existing gateway
+ - DELETE `baseURL/gateways/:d` delete an existing gateway
+ - POST `baseURL/gateways/:gatewayId/device` adds a device to an existing gateway
+ - DELETE `baseURL/gateways/:gatewayId/device/:deviceId` delete an existing device on an existing gateway
