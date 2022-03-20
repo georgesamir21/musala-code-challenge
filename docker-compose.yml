@@ -35,6 +35,21 @@ services:
     tty: true
     volumes:
       - ./backend:/app/api
+
+  react_app:
+    image: react_app
+    container_name: react_app
+    depends_on:
+      - mongodb
+      - api_app
+    build:
+      ./frontend
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app/frontend
+    
 volumes:
   db:
 

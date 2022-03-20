@@ -7,7 +7,7 @@ import { IGateway } from "../types/Gateway";
 const { Title } = Typography;
 
 export const Gateways = () => {
-  const { data: gateways, get } = useGetGateways();
+  const { data: gateways } = useGetGateways();
 
   const columns: ColumnsType<IGateway> = [
     {
