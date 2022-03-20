@@ -24,13 +24,13 @@ export const GatewayDetails = () => {
     {
       title: "Vendor",
       dataIndex: "vendor",
-      key: "_id",
+      key: "vendor",
     },
 
     {
       title: "Status",
       dataIndex: "status",
-      key: "_id",
+      key: "status",
       render: (text) => (
         <Tag color={text === "offline" ? "volcano" : "green"}>{text}</Tag>
       ),
@@ -38,7 +38,7 @@ export const GatewayDetails = () => {
 
     {
       title: "Actions",
-      key: "_id",
+      key: "actions",
       render: (text, record) => (
         <DeleteFilled onClick={() => handleDeviceDelete(record._id)} />
       ),

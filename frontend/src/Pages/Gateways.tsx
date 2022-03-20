@@ -9,11 +9,11 @@ const { Title } = Typography;
 export const Gateways = () => {
   const { data: gateways } = useGetGateways();
 
-  const columns: ColumnsType<IGateway> = [
+  const columns: ColumnsType<IGateway | any> = [
     {
       title: "Name",
       dataIndex: "name",
-      key: "_id",
+      key: "name",
       render: (text, record) => (
         <Link to={`/gateways/${record._id}`}>
           <Title level={5}>{text}</Title>
@@ -23,17 +23,17 @@ export const Gateways = () => {
     {
       title: "IP address",
       dataIndex: "ip_address",
-      key: "_id",
+      key: "ip_address",
     },
     {
       title: "serial number",
       dataIndex: "serial_number",
-      key: "_id",
+      key: "serial_number",
     },
     {
       title: "Peripheral devices",
       dataIndex: "devices",
-      key: "_id",
+      key: "devices",
       render: (text) => <span>{text.length}</span>,
     },
   ];
