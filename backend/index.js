@@ -1,7 +1,6 @@
-console.log('script start****************!!s!');
 const express = require('express');
 const mongoose = require('mongoose');
-const { gatewaysRouter, devicesRouter } = require('./src/routes');
+const { gatewaysRouter } = require('./src/routes');
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 mongoose
   .connect(
@@ -11,7 +10,7 @@ mongoose
       useUnifiedTopology: true
     }
   )
-  .then(() => console.log('Connected to DB!*'))
+  .then(() => console.log('Connected to DB!'))
   .catch((err) => console.log('Error Connect to DB!', err));
 
 const server = express();
@@ -24,8 +23,8 @@ server.use((req, res, next) => {
 server.use(express.json());
 server.get('/', (req, res) => res.send('Welcome to Gateway API!'));
 server.use('/gateways', gatewaysRouter);
-server.use('/devices', devicesRouter);
+server.use('**', (req, res) => res.status(404).send('Page not found'));
 // start the server...
-server.listen(8000, (s) => {
-  console.log(s);
+server.listen(8000, () => {
+  console.log('Server is up and running, enjoy!');
 });
